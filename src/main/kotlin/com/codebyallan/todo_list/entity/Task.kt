@@ -42,5 +42,5 @@ class Task(
      * The timestamp indicating the last time the task was modified.
      * Automatically updated by Hibernate on every change.
      */
-    @UpdateTimestamp @Column(name = "updated_at") var updateAt: Instant? = null
+    @UpdateTimestamp @Column(name = "updated_at") var updatedAt: Instant? = null
 )
