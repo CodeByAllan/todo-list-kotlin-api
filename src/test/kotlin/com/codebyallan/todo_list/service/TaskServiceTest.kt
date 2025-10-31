@@ -125,28 +125,23 @@ class TaskServiceTest {
 
     @Test
     fun `update you must update the fields and return the Task with the Id preserved`() {
-        val taskId: Long = 1
+        val id: Long = 1
         val updateTaskDto = UpdateTaskDto(title = "play soccer in PS5", description = "EA SPORTS FC 25", isDone = false)
 
-        every { repository.findById(taskId) } returns Optional.of(task)
+        every { repository.findById(id) } returns Optional.of(task)
         every { repository.save(any()) } answers {
             val capturedTask = it.invocation.args[0] as Task
-            Task(
-                id = taskId,
-                title = capturedTask.title,
-                description = capturedTask.description,
-                isDone = capturedTask.isDone
-            )
+            capturedTask.copy(id = id)
         }
 
-        val result = service.updateTask(taskId, updateTaskDto)
+        val result = service.updateTask(id, updateTaskDto)
 
-        assertEquals(taskId, result.id, "The ID must be preserved.")
+        assertEquals(id, result.id, "The ID must be preserved.")
         assertEquals(updateTaskDto.title, result.title, "The Title needs to be updated.")
         assertEquals(updateTaskDto.description, result.description, "The Description needs to be updated.")
         assertEquals(updateTaskDto.isDone, result.isDone, "The isDone status needs to be updated.")
 
-        verify(exactly = 1) { repository.findById(taskId) }
+        verify(exactly = 1) { repository.findById(id) }
         verify(exactly = 1) { repository.save(any()) }
     }
 
