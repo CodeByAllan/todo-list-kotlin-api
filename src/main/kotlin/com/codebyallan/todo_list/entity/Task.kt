@@ -23,16 +23,17 @@ data class Task(
     /**
      * Title is of type String and required.
      */
+    @Column(nullable = false)
     var title: String = "",
     /**
      * Description is of type String and optional.
      */
-    var description: String? = "",
+    var description: String? = null,
     /**
      * IsDone is of type  Boolean.
      * Default value is false.
      */
-    @Column(name = "is_done") var isDone: Boolean = false,
+    @Column(name = "is_done", nullable = false) var isDone: Boolean = false,
     /**
      * The timestamp indicating when the task was first created.
      * Automatically set by Hibernate on initial persistence.
